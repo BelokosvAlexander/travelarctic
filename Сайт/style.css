@@ -1,0 +1,341 @@
+/* Стили блоков */
+body {
+  padding: 0px;
+  margin: 0;
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  word-spacing: 3px;
+  background-color: rgb(86, 178, 201);
+}
+#basic {
+  width: 1000px;
+  min-height: auto;
+  max-height: auto;
+  margin: 0 auto;
+  margin-top: 30px;
+  padding: 20px 20px 20px 20px;
+  background: #ffffff;
+}
+
+/* Кнопка */
+
+.btn {
+  text-decoration: none;
+  background-color: #ddd;
+  border: none;
+  border-radius: 8px;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  font-size: 16px;
+  margin: 25px 2px;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  text-decoration: none;
+  background-color: dodgerblue;
+  color: #f1f1f1;
+}
+
+/*Footer */
+
+.footer {
+  background-color: #f1f1f1;
+  color: black;
+  text-align: center;
+  padding: 20px 0;
+  margin-top: 30px;
+}
+
+.footer_content {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.footer_content::before,
+.footer_content::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: dodgerblue;
+  left: 0;
+}
+
+.footer_content::before{
+  top: 0;
+}
+
+.footer_content::after{
+  bottom: 0;
+}
+
+.footer_content_items{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media (min-width: 700px){
+  .footer_content_items{
+      flex-direction: row;
+  }
+
+  @media only screen and (max-width: 600px) {
+    header {
+      text-align: center;
+    }
+
+  .footer_item{
+      width: calc(100% / 3);
+  }
+}
+
+/* Фиксированное меню */
+.header-menu-wrp {
+  height: 40px;
+  line-height: 40px;
+  width: 100%;
+  color: black;
+  margin-bottom: 20px;
+}
+.header-menu-wrp.cloned {
+  position: fixed;
+  top: 0;
+  margin-top: 0;
+  z-index: 9999;
+  display: none;
+}
+
+/* Style the header with a grey background and some padding */
+.header {
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+/* Style the header links */
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 19px;
+  line-height: 25px;
+  border-radius: 8px;
+}
+
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.header a.logo {
+  font-size: 23px;
+  font-weight: bold;
+  margin-left: 40px;
+}
+
+.header a.logo:hover {
+  background-color: dodgerblue;
+  color: #f1f1f1;
+}
+
+/* Style the active/current link*/
+.header a.active {
+  background-color: #f1f1f1;
+  color: black;
+}
+
+/* Float the link section to the right */
+.header-right {
+  float: right;
+}
+
+.header-right a.active:hover {
+  background-color: dodgerblue;
+  color: #f1f1f1;
+}
+
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .header-right {
+    float: none;
+  }
+}
+
+/* The dropdown container */
+.dropdown {
+  float: left;
+  overflow: hidden;
+  float: right;
+  margin-right: 153px;
+}
+
+/* Dropdown button */
+.dropdown .dropbtn {
+  font-size: 19px;
+  border: none;
+  outline: none;
+  color: black;
+  padding: 14px 16px;
+  background-color: #f1f1f1;
+  border-radius: 8px;
+  font-family: inherit; /* Important for vertical align on mobile phones */
+  margin: 0; /* Important for vertical align on mobile phones */
+}
+
+.dropdown .dropbtn:hover {
+  background-color: dodgerblue;
+  color: #f1f1f1;
+}
+
+/* Dropdown content (hidden by default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 14px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 10px 8px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+  display: block;
+  text-align: left;
+}
+
+/* Add a grey background color to dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: dodgerblue;
+  color: #f1f1f1;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Галерея */
+
+.cssSlider {
+  display: block;
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+.cssSlider .slides {
+  overflow: hidden;
+  width: 100%;
+  height: 70vmin;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.cssSlider .slides > li {
+  width: 100%;
+  height: 70vmin;
+  position: absolute;
+  z-index: 1;
+  overflow: hidden;
+}
+.cssSlider .slides > li > img {
+  width: 100%;
+  height: auto;
+}
+
+.cssSlider .slides > li:first-child:not(:target) {
+  z-index: 1;
+  -webkit-transform: translateY(0%);
+  transform: translateY(0%);
+}
+.cssSlider .thumbnails {
+  display: block;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.cssSlider .thumbnails > li {
+  float: left;
+  width: 20%;
+}
+.cssSlider .thumbnails > li > a {
+  display: block;
+}
+.cssSlider .thumbnails > li > a > img {
+  width: 100%;
+  height: auto;
+}
+
+.cssSlider .slides li:target {
+  z-index: 3;
+  -webkit-animation: slide 1s 1;
+}
+.cssSlider .slides li:not(:target) {
+  -webkit-animation: hidden 1s 1;
+}
+@-webkit-keyframes slide {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+}
+@keyframes slide {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  100% {
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+}
+@-webkit-keyframes hidden {
+  0% {
+    z-index: 2;
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+  100% {
+    z-index: 2;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+@keyframes hidden {
+  0% {
+    z-index: 2;
+    -webkit-transform: translateX(0%);
+    transform: translateX(0%);
+  }
+  100% {
+    z-index: 2;
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+
+/* Погода */
+.weather {
+  position: relative;
+  display: block;
+  float: center;
+  width: 100%;
+  height: auto;
+}
