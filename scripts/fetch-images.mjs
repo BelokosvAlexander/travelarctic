@@ -63,7 +63,7 @@ async function download(url) {
   const contentType = response.headers.get('content-type') || ''
   if (!contentType.startsWith('image/')) throw new Error(`Неизображение (${contentType || 'тип не указан'})`)
   const buffer = Buffer.from(await response.arrayBuffer())
-  if (buffer.length > 2_000_000) throw new Error(`Файл слишком большой (${Math.round(buffer.length / 1_000_000)} MB)`)
+  if (buffer.length > 400_000) throw new Error(`Файл слишком большой (${Math.round(buffer.length / 1000)} KB)`)
   return buffer
 }
 
