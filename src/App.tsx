@@ -35,7 +35,7 @@ const destinations: Destination[] = [
     name: 'Кольский полуостров',
     shortName: 'Кольский',
     region: 'Мурманская область · Баренцево море',
-    image: './images/teriberka-vertical.webp',
+    image: './images/teriberka-vertical.jpg',
     alt: 'Скалистое побережье Баренцева моря в Териберке',
     season: 'Лето и ранняя осень — для первой поездки',
     duration: '3–5 дней',
@@ -65,7 +65,7 @@ const destinations: Destination[] = [
     name: 'Кижи и Онежское озеро',
     shortName: 'Кижи',
     region: 'Карелия · Онежское озеро',
-    image: './images/kizhi.webp',
+    image: './images/kizhi.jpg',
     alt: 'Деревянные церкви и колокольня Кижского погоста у воды',
     season: 'Летняя навигация; зимой — отдельные программы',
     duration: '2–3 дня',
@@ -79,7 +79,7 @@ const destinations: Destination[] = [
       { title: 'Ремёсла и традиции', text: 'Тематические экскурсии и демонстрации ремёсел помогают увидеть за архитектурой живую культуру. Проверяйте программу конкретной даты на сайте музея.' },
     ],
     plan: [
-      { title: 'День 1 · Петрозаводск', text: 'Приезжайте накануне водной переправы, особенно если рейс ранний. Оставьте вечер на набережную и проверку билетов.' },
+      { title: 'День 1 · Петрозаводск', text: 'Приезжайте накануне водной переправы, особенно если рейс ранний. Оставьте вечер на набережной и проверку билетов.' },
       { title: 'День 2 · Остров Кижи', text: 'Заложите почти полный день на переправу и музей. Уточните время стоянки: короткого рейса может хватить только на основную экспозицию.' },
       { title: 'День 3 · Резерв или Карелия', text: 'При плотной транспортной связке оставьте запас на погоду. Если всё идёт по плану, продолжите знакомство с Петрозаводском или Заонежьем.' },
     ],
@@ -94,7 +94,7 @@ const destinations: Destination[] = [
     name: 'Соловецкие острова',
     shortName: 'Соловки',
     region: 'Архангельская область · Белое море',
-    image: './images/solovki.webp',
+    image: './images/solovki.jpg',
     alt: 'Соловецкий монастырь, каменные стены и островная гавань с высоты',
     season: 'Тёплая навигация; межсезонье требует проверки',
     duration: '3–4 дня',
@@ -124,7 +124,7 @@ const destinations: Destination[] = [
     name: 'Земля Франца-Иосифа',
     shortName: 'Земля Франца-Иосифа',
     region: 'Архангельская область · высокоширотная Арктика',
-    image: './images/franz-josef.webp',
+    image: './images/franz-josef.jpg',
     alt: 'Ледники и низкие облака над островами Земли Франца-Иосифа',
     season: 'Короткий экспедиционный сезон',
     duration: 'По программе экспедиции',
@@ -299,7 +299,7 @@ export default function App() {
 
       <main id="main">
         <section className="hero" aria-labelledby="hero-title">
-          <img className="hero-image" src="./images/hero-teriberka.webp" alt="Скалистый берег Баренцева моря в Териберке" fetchPriority="high" />
+          <img className="hero-image" src="./images/hero-teriberka.jpg" alt="Скалистый берег Баренцева моря в Териберке" fetchPriority="high" />
           <div className="hero-shade" />
           <div className="hero-content">
             <h1 id="hero-title">Арктика и<br />Русский Север</h1>
@@ -478,7 +478,7 @@ export default function App() {
           <details>
             <summary>Фотографии и лицензии <ChevronRight size={15} /></summary>
             <div className="credits-list">
-              <p>Фотографии кадрированы и конвертированы в WebP для сайта.</p>
+              <p>Фотографии кадрированы для сайта. Если оригинал недоступен во время сборки, используется архивная фотография проекта.</p>
               <a href="https://www.pexels.com/photo/teriberka-coast-russia-9740984/" target="_blank" rel="noopener noreferrer">Териберка · Sergei Gussev · Pexels License<ExternalLink size={13} /></a>
               <a href="https://commons.wikimedia.org/wiki/File:Kizhi_churches.jpg" target="_blank" rel="noopener noreferrer">Кижи · MatthiasKabel · CC BY-SA 3.0<ExternalLink size={13} /></a>
               <a href="https://commons.wikimedia.org/wiki/File:Solovetsky_Monastery_drone_1.jpg" target="_blank" rel="noopener noreferrer">Соловки · Trasprd · CC BY-SA 4.0<ExternalLink size={13} /></a>
