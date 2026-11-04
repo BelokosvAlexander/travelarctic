@@ -62,7 +62,9 @@ async function download(url) {
   if (!response.ok) throw new Error(`HTTP ${response.status}`)
   const contentType = response.headers.get('content-type') || ''
   if (!contentType.startsWith('image/')) throw new Error(`Неизображение (${contentType || 'тип не указан'})`)
-  return Buffer.from(await response.arrayBuffer())
+  const buffer = Buffer.from(await response.arrayBuffer())
+  if (buffer.length > 2_000_000) throw new Error(`Файл слишком большой (${Math.round(buffer.length / 1_000_000)} MB)`)
+  return buffer
 }
 
 async function downloadWithFallback(urls) {
