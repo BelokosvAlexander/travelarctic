@@ -10,7 +10,11 @@ const sources = [
   {
     id: 'teriberka',
     title: 'Sergei Gussev — Teriberka coast / Pexels License',
-    urls: ['https://images.pexels.com/photos/9740984/pexels-photo-9740984.jpeg'],
+    urls: [
+      'https://images.pexels.com/photos/9740984/pexels-photo-9740984.jpeg?auto=compress&cs=tinysrgb&w=1800',
+      'https://images.pexels.com/photos/9740984/pexels-photo-9740984.jpeg',
+      'https://www.pexels.com/download/9740984/',
+    ],
     outputs: [
       { name: 'hero-teriberka.webp', width: 1800, height: 1200, format: 'webp', quality: 78 },
       { name: 'teriberka-vertical.webp', width: 1000, height: 1500, format: 'webp', quality: 80 },
@@ -49,22 +53,29 @@ function wikimediaUrls(filename) {
 async function download(url) {
   const response = await fetch(url, {
     redirect: 'follow',
-    signal: AbortSignal.timeout(90_000),
-    headers: { 'User-Agent': 'TravelArcticImageBuilder/1.0 (non-commercial editorial guide)' },
+    signal: AbortSignal.timeout(30_000),
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+      Accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+    },
   })
   if (!response.ok) throw new Error(`HTTP ${response.status}`)
+  const contentType = response.headers.get('content-type') || ''
+  if (!contentType.startsWith('image/')) throw new Error(`Неизображение (${contentType || 'тип не указан'})`)
   return Buffer.from(await response.arrayBuffer())
 }
 
 async function downloadWithFallback(urls) {
   let lastError
   for (const url of urls) {
-    try {
-      console.log(`Загрузка: ${url}`)
-      return await download(url)
-    } catch (error) {
-      lastError = error
-      console.warn(`Не удалось загрузить источник: ${error.message}`)
+    for (let attempt = 1; attempt <= 2; attempt += 1) {
+      try {
+        console.log(`Загрузка (попытка ${attempt}): ${url}`)
+        return await download(url)
+      } catch (error) {
+        lastError = error
+        console.warn(`Не удалось загрузить источник: ${error.message}`)
+      }
     }
   }
   throw lastError
