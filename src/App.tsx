@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import {
-  AlertTriangle, ArrowDown, ArrowLeft, ArrowRight,
-  CalendarDays, Check, ChevronRight, Clock3, CloudSun, Compass, Download,
-  ExternalLink, FileText, Leaf, MapPin, Menu, Phone, Printer, ShieldCheck, X,
+  AlertTriangle, ArrowLeft, ArrowRight, CalendarDays, Check, ChevronRight,
+  CloudSun, Compass, Download, ExternalLink, FileText, Menu, Phone, Printer, X,
 } from 'lucide-react'
 import './App.css'
 
@@ -293,7 +292,6 @@ export default function App() {
           <button onClick={() => scrollTo('directions')}>Направления</button>
           <button onClick={() => scrollTo('guide')}>Путеводитель</button>
           <button onClick={() => scrollTo('prepare')}>Подготовка</button>
-          <button onClick={() => scrollTo('about')}>О проекте</button>
         </nav>
         <button className="nav-cta" onClick={() => scrollTo('memo')}>Памятка <FileText size={17} /></button>
         <button className="menu-button" onClick={() => setMenuOpen(true)} aria-label="Открыть меню" aria-expanded={menuOpen}><Menu /></button>
@@ -303,39 +301,33 @@ export default function App() {
         <section className="hero" aria-labelledby="hero-title">
           <img className="hero-image" src="/images/hero-teriberka.webp" alt="Скалистый берег Баренцева моря в Териберке" fetchPriority="high" />
           <div className="hero-shade" />
-          <div className="hero-coordinates" aria-hidden="true">69.1642° N<br />35.1406° E</div>
           <div className="hero-content">
-            <p className="hero-kicker"><span /> Путеводитель по Арктике и Русскому Северу</p>
-            <h1 id="hero-title">Север,<br /><em>которому не нужно</em><br />спешить.</h1>
-            <p className="hero-lead">Четыре направления, спокойные маршруты и честная подготовка — без продажи туров и обещаний идеальной погоды.</p>
+            <h1 id="hero-title">Арктика и<br />Русский Север</h1>
+            <p className="hero-lead">Кольский полуостров, Кижи, Соловецкие острова и Земля Франца-Иосифа. Особенности мест, ориентиры для маршрута и подготовка к поездке.</p>
             <div className="hero-actions">
               <button className="primary-button" onClick={() => scrollTo('directions')}>Выбрать направление <ArrowRight size={20} /></button>
-              <button className="text-button light" onClick={() => scrollTo('prepare')}>Как подготовиться <ArrowDown size={18} /></button>
             </div>
           </div>
           <div className="hero-foot">
-            <span>Териберка · Кольский полуостров</span>
-            <span>Редакционная проверка · {REVIEW_DATE}</span>
+            <span>Териберка, Кольский полуостров</span>
           </div>
         </section>
 
         <section className="intro-section" id="directions">
           <div className="section-heading">
-            <p className="section-index">01 / НАПРАВЛЕНИЯ</p>
-            <h2>Четыре истории.<br /><em>Разный Север.</em></h2>
+            <h2>Четыре направления</h2>
           </div>
           <div className="intro-copy">
-            <p>От дороги к Баренцеву морю до высокоширотной экспедиции: выбирайте не только пейзаж, но и формат путешествия, который вам действительно подходит.</p>
+            <p>От дороги к Баренцеву морю до высокоширотной экспедиции. Выбирайте не только пейзаж, но и формат путешествия, который вам подходит.</p>
             <p className="small-note">Сезон и длительность — ориентиры, а не расписание. Погоду, перевозки и правила посещения проверяйте перед каждой поездкой.</p>
           </div>
         </section>
 
         <section className="destination-grid" aria-label="Направления путешествий">
-          {destinations.map((destination, index) => (
+          {destinations.map((destination) => (
             <article className={`destination destination-${destination.id}`} key={destination.id}>
               <img src={destination.image} alt={destination.alt} loading="lazy" />
               <div className="destination-overlay" />
-              <div className="destination-number">0{index + 1}</div>
               <div className="destination-content">
                 <p>{destination.region}</p>
                 <h3>{destination.name}</h3>
@@ -352,21 +344,20 @@ export default function App() {
         <section className="guide-section" id="guide" aria-labelledby="guide-title">
           <div className="guide-header">
             <div>
-              <p className="section-index">02 / ПУТЕВОДИТЕЛЬ</p>
-              <h2 id="guide-title">Сначала понять место.<br /><em>Потом строить план.</em></h2>
+              <h2 id="guide-title">Путеводитель</h2>
             </div>
-            <p>Каждый раздел — законченный редакционный ориентир. Здесь нет билетов и бронирований: актуальные условия всегда остаются за официальными источниками.</p>
+            <p>Выберите направление: ниже — особенности места, ориентировочный план и ссылки на официальные источники.</p>
           </div>
 
           <div className="guide-switcher" role="group" aria-label="Выбрать направление">
-            {destinations.map((destination, index) => (
+            {destinations.map((destination) => (
               <button
                 key={destination.id}
                 aria-pressed={active.id === destination.id}
                 className={active.id === destination.id ? 'active' : ''}
                 onClick={() => selectDestination(destination.id, false)}
               >
-                <span>0{index + 1}</span>{destination.shortName}
+                {destination.shortName}
               </button>
             ))}
           </div>
@@ -387,11 +378,10 @@ export default function App() {
             </div>
 
             <div className="guide-highlights">
-              <h4><MapPin size={20} />Что не пропустить</h4>
+              <h4>Что не пропустить</h4>
               <div className="highlight-grid">
-                {active.highlights.map((item, index) => (
+                {active.highlights.map((item) => (
                   <section key={item.title}>
-                    <span>0{index + 1}</span>
                     <h5>{item.title}</h5>
                     <p>{item.text}</p>
                   </section>
@@ -401,7 +391,7 @@ export default function App() {
 
             <div className="guide-planning">
               <div className="plan-column">
-                <h4><Clock3 size={20} />Как строить поездку</h4>
+                <h4>Как строить поездку</h4>
                 <ol className="plan-list">
                   {active.plan.map(item => (
                     <li key={item.title}>
@@ -436,27 +426,25 @@ export default function App() {
 
         <section className="prepare-section" id="prepare">
           <div className="prepare-heading">
-            <p className="section-index">03 / ПОДГОТОВКА</p>
-            <h2>Хороший маршрут<br /><em>умеет меняться.</em></h2>
+            <h2>Перед поездкой</h2>
             <p>На Севере гибкость — часть плана. Эти принципы остаются полезными независимо от сезона, цен и расписаний.</p>
           </div>
           <div className="principles-grid">
-            <article><CloudSun size={27} /><span>01</span><h3>Погода важнее списка мест</h3><p>Проверяйте не только температуру, но и ветер, осадки, видимость и предупреждения. Оставляйте запасной сценарий и день.</p></article>
-            <article><ShieldCheck size={27} /><span>02</span><h3>Условия — у первоисточника</h3><p>Дороги, навигацию, билеты, пропускной режим и правила посещения уточняйте у музея, парка, перевозчика или местной администрации.</p></article>
-            <article><Leaf size={27} /><span>03</span><h3>Меньше следа, больше уважения</h3><p>Оставайтесь на разрешённых тропах, не приближайтесь к животным, уносите мусор и учитывайте интересы людей, которые живут рядом.</p></article>
+            <article><h3>Погода важнее списка мест</h3><p>Проверяйте не только температуру, но и ветер, осадки, видимость и предупреждения. Оставляйте запасной сценарий и день.</p></article>
+            <article><h3>Условия — у первоисточника</h3><p>Дороги, навигацию, билеты, пропускной режим и правила посещения уточняйте у музея, парка, перевозчика или местной администрации.</p></article>
+            <article><h3>Меньше следа, больше уважения</h3><p>Оставайтесь на разрешённых тропах, не приближайтесь к животным, уносите мусор и учитывайте интересы людей, которые живут рядом.</p></article>
           </div>
         </section>
 
         <section className="memo-section" id="memo">
           <div className="memo-intro">
-            <p className="section-index">04 / ВЗЯТЬ С СОБОЙ</p>
-            <h2>Одна памятка.<br /><em>Без приложения и аккаунта.</em></h2>
-            <p>Скачайте текстовый файл — он откроется на телефоне без интернета. Или распечатайте памятку и сохраните её в PDF через системный диалог печати.</p>
+            <h2>Памятка на дорогу</h2>
+            <p>Восемь пунктов, которые стоит проверить перед выездом. Скачайте текстовый файл на телефон или распечатайте памятку.</p>
             <div className="memo-actions">
               <button className="primary-button" onClick={downloadMemo}><Download size={19} />Скачать .txt</button>
               <button className="secondary-button" onClick={printMemo}><Printer size={19} />Печать / PDF</button>
             </div>
-            <p className="memo-note">Это реальный файл и системная печать, а не имитация офлайн-режима. Для карт используйте офлайн-функцию вашего картографического приложения.</p>
+            <p className="memo-note">Карты заранее скачайте в своём картографическом приложении. Памятка не заменяет инструктаж и правила конкретной территории.</p>
           </div>
 
           <article className="print-memo" id="print-memo">
@@ -477,32 +465,16 @@ export default function App() {
           </article>
         </section>
 
-        <section className="about-section" id="about">
-          <div className="about-story">
-            <p className="section-index">05 / О ПРОЕКТЕ</p>
-            <h2>Завершённый гид,<br /><em>а не очередной стартап.</em></h2>
-            <p>Travel Arctic начался как школьный самостоятельный сайт. Затем появились новая визуальная версия и мобильный прототип цифрового гида. Эта редакция объединяет их главные идеи и оставляет только то, что может оставаться полезным годами.</p>
-          </div>
-          <ol className="project-timeline">
-            <li><span>2023</span><div><h3>Первая версия</h3><p>Самостоятельно собранный туристический сайт об Арктике: первые тексты, страницы и Яндекс Метрика.</p></div></li>
-            <li><span>2024</span><div><h3>Новый взгляд</h3><p>Более современная версия и мобильный прототип: яснее структура, навигация и сценарии чтения.</p></div></li>
-            <li><span>2026</span><div><h3>Финальная редакция</h3><p>Четыре полноценных направления, свободные фотографии, реальная памятка и долговечный статический сайт.</p></div></li>
-          </ol>
-          <div className="about-links">
-            <a href="https://github.com/BelokosvAlexander/travelarctic" target="_blank" rel="noopener noreferrer">Исходный код на GitHub<ExternalLink size={16} /></a>
-            <span>Без монетизации, аккаунтов и серверной базы данных.</span>
-          </div>
-        </section>
       </main>
 
       <footer className="site-footer">
         <div className="footer-top">
           <div className="brand footer-brand"><Compass size={25} /><span>TRAVEL ARCTIC</span></div>
-          <p>Некоммерческий редакционный путеводитель. Не туристический оператор и не сервис бронирования.</p>
+          <p>Путеводитель по Арктике и Русскому Северу. Не туристический оператор и не сервис бронирования.</p>
           <button onClick={() => scrollTo('directions')}>К направлениям <ArrowRight size={16} /></button>
         </div>
         <div className="footer-bottom">
-          <span>Редакционная проверка: {REVIEW_DATE}</span>
+          <span>Редакция: {REVIEW_DATE}</span>
           <details>
             <summary>Фотографии и лицензии <ChevronRight size={15} /></summary>
             <div className="credits-list">
@@ -513,7 +485,7 @@ export default function App() {
               <a href="https://commons.wikimedia.org/wiki/File:Franz_Josef_Land_(18988581584).jpg" target="_blank" rel="noopener noreferrer">Земля Франца-Иосифа · Christopher Michel · CC BY 2.0<ExternalLink size={13} /></a>
             </div>
           </details>
-          <span>Яндекс Метрика используется для обезличенной статистики посещений и взаимодействий.</span>
+          <span>Перед выездом проверьте погоду, транспорт и правила посещения по официальным источникам.</span>
         </div>
       </footer>
 
@@ -524,7 +496,7 @@ export default function App() {
           <button onClick={() => scrollTo('directions')}>Направления <ArrowRight /></button>
           <button onClick={() => scrollTo('guide')}>Путеводитель <ArrowRight /></button>
           <button onClick={() => scrollTo('prepare')}>Подготовка <ArrowRight /></button>
-          <button onClick={() => scrollTo('about')}>О проекте <ArrowRight /></button>
+          <button onClick={() => scrollTo('memo')}>Памятка <ArrowRight /></button>
         </nav>
         <button className="primary-button" onClick={() => scrollTo('memo')}>Открыть памятку <FileText size={18} /></button>
       </div>}
