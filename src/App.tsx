@@ -8,9 +8,12 @@ import './App.css'
 type Source = { label: string; url: string }
 type Highlight = { title: string; text: string }
 type PlanStep = { title: string; text: string }
+type DestinationId = 'kola' | 'kizhi' | 'solovki' | 'franz'
+type QuizOption = { label: string; destination: DestinationId }
+type QuizQuestion = { question: string; options: QuizOption[] }
 
 type Destination = {
-  id: string
+  id: DestinationId
   name: string
   shortName: string
   region: string
@@ -79,7 +82,7 @@ const destinations: Destination[] = [
       { title: 'Ремёсла и традиции', text: 'Тематические экскурсии и демонстрации ремёсел помогают увидеть за архитектурой живую культуру. Проверяйте программу конкретной даты на сайте музея.' },
     ],
     plan: [
-      { title: 'День 1 · Петрозаводск', text: 'Приезжайте накануне водной переправы, особенно если рейс ранний. Оставьте вечер на набережной и проверку билетов.' },
+      { title: 'День 1 · Петрозаводск', text: 'Приезжайте накануне водной переправы, особенно если рейс ранний. Оставьте вечер на набережную и проверку билетов.' },
       { title: 'День 2 · Остров Кижи', text: 'Заложите почти полный день на переправу и музей. Уточните время стоянки: короткого рейса может хватить только на основную экспозицию.' },
       { title: 'День 3 · Резерв или Карелия', text: 'При плотной транспортной связке оставьте запас на погоду. Если всё идёт по плану, продолжите знакомство с Петрозаводском или Заонежьем.' },
     ],
@@ -151,6 +154,73 @@ const destinations: Destination[] = [
   },
 ]
 
+const quizQuestions: QuizQuestion[] = [
+  {
+    question: 'Что должно остаться в памяти после поездки?',
+    options: [
+      { label: 'Дорога через тундру и встреча с Баренцевым морем', destination: 'kola' },
+      { label: 'Деревянные церкви и истории северных деревень', destination: 'kizhi' },
+      { label: 'Монастырь у Белого моря и неспешные прогулки по острову', destination: 'solovki' },
+      { label: 'Ледники, полярные пустыни и жизнь на экспедиционном судне', destination: 'franz' },
+    ],
+  },
+  {
+    question: 'Сколько времени вы готовы выделить?',
+    options: [
+      { label: 'Короткая поездка на 2–3 дня', destination: 'kizhi' },
+      { label: '3–5 дней с одним резервным днём', destination: 'kola' },
+      { label: 'Столько, сколько длится экспедиция', destination: 'franz' },
+      { label: '3–4 дня без жёсткого расписания', destination: 'solovki' },
+    ],
+  },
+  {
+    question: 'Какая дорога вам подходит?',
+    options: [
+      { label: 'Переправа или перелёт с запасом на погоду', destination: 'solovki' },
+      { label: 'Самостоятельные выезды по автомобильным дорогам', destination: 'kola' },
+      { label: 'Понятная связка: город, водная переправа, остров', destination: 'kizhi' },
+      { label: 'Только организованная экспедиция: маршрут уточняет капитан', destination: 'franz' },
+    ],
+  },
+  {
+    question: 'Какой темп путешествия вам ближе?',
+    options: [
+      { label: 'Несколько мест вокруг одной базы, план зависит от погоды', destination: 'kola' },
+      { label: 'Тишина, чтение, прогулки и отдельные экскурсии', destination: 'solovki' },
+      { label: 'Лекции, высадки и готовность следовать экспедиционному плану', destination: 'franz' },
+      { label: 'Одна главная тема и время на музей без спешки', destination: 'kizhi' },
+    ],
+  },
+  {
+    question: 'С какими условиями вы готовы мириться?',
+    options: [
+      { label: 'Зависимость от навигации и музейной программы', destination: 'kizhi' },
+      { label: 'Более сложная логистика и ограниченный транспорт между островами', destination: 'solovki' },
+      { label: 'Ветер, возможные закрытия дорог и перенос выездов', destination: 'kola' },
+      { label: 'Отсутствие самостоятельного маршрута и гарантий высадок', destination: 'franz' },
+    ],
+  },
+]
+
+const quizResultCopy: Record<DestinationId, string> = {
+  kola: 'Вам подходит самостоятельная поездка с несколькими впечатлениями: северный город, дорога через тундру, побережье и горы. Закладывайте резервный день и не планируйте маршрут вплотную.',
+  kizhi: 'Вам ближе короткое путешествие с понятной культурной темой. Кижи позволяют сосредоточиться на деревянном зодчестве, быте северных деревень и спокойной прогулке по острову.',
+  solovki: 'Вы готовы к более сложной дороге ради островного ритма, истории и тишины. На Соловках особенно важны запас времени и внимательное отношение к разным слоям истории архипелага.',
+  franz: 'Вы выбираете не обычную туристическую поездку, а редкую полярную экспедицию. Здесь самостоятельный маршрут невозможен: программа, высадки и возвращение зависят от команды, льда и погоды.',
+}
+
+function getQuizResult(answers: DestinationId[]): DestinationId {
+  const scores: Record<DestinationId, number> = { kola: 0, kizhi: 0, solovki: 0, franz: 0 }
+  answers.forEach(answer => { scores[answer] += 1 })
+  const highestScore = Math.max(...Object.values(scores))
+  const leaders = destinations
+    .map(destination => destination.id)
+    .filter(id => scores[id] === highestScore)
+
+  // При равенстве решает самый ранний ответ среди лидеров: главный мотив поездки важнее случайного порядка направлений.
+  return answers.find(answer => leaders.includes(answer)) ?? 'kola'
+}
+
 const checklist = [
   'Проверить прогноз погоды, ветер и предупреждения на весь период поездки.',
   'Уточнить дорогу, навигацию, расписание и правила посещения по официальным источникам.',
@@ -202,12 +272,17 @@ function trackGoal(goal: string, params?: Record<string, string>) {
 }
 
 export default function App() {
-  const [selectedId, setSelectedId] = useState('kola')
+  const [selectedId, setSelectedId] = useState<DestinationId>('kola')
   const [menuOpen, setMenuOpen] = useState(false)
   const [notice, setNotice] = useState('')
+  const [quizStep, setQuizStep] = useState(0)
+  const [quizAnswers, setQuizAnswers] = useState<DestinationId[]>([])
+  const [quizComplete, setQuizComplete] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
+  const quizFocusRef = useRef<HTMLHeadingElement>(null)
   const active = destinations.find(item => item.id === selectedId) ?? destinations[0]
   const activeIndex = destinations.findIndex(item => item.id === active.id)
+  const quizResult = destinations.find(item => item.id === getQuizResult(quizAnswers)) ?? destinations[0]
 
   useEffect(() => {
     if (!notice) return
@@ -250,7 +325,7 @@ export default function App() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const selectDestination = (id: string, shouldScroll = true) => {
+  const selectDestination = (id: DestinationId, shouldScroll = true) => {
     setSelectedId(id)
     trackGoal('destination_open', { destination: id })
     if (shouldScroll) window.setTimeout(() => scrollTo('guide'), 30)
@@ -259,6 +334,49 @@ export default function App() {
   const changeDestination = (direction: number) => {
     const nextIndex = (activeIndex + direction + destinations.length) % destinations.length
     selectDestination(destinations[nextIndex].id, false)
+  }
+
+  const focusQuizHeading = () => {
+    window.setTimeout(() => quizFocusRef.current?.focus(), 30)
+  }
+
+  const answerQuiz = (destination: DestinationId) => {
+    const nextAnswers = [...quizAnswers]
+    nextAnswers[quizStep] = destination
+    setQuizAnswers(nextAnswers)
+
+    if (quizStep === 0 && quizAnswers.length === 0) trackGoal('quiz_start')
+
+    if (quizStep === quizQuestions.length - 1) {
+      setQuizComplete(true)
+      trackGoal('quiz_complete', { destination: getQuizResult(nextAnswers) })
+    } else {
+      setQuizStep(step => step + 1)
+    }
+    focusQuizHeading()
+  }
+
+  const previousQuizQuestion = () => {
+    if (quizComplete) {
+      setQuizComplete(false)
+      setQuizStep(quizQuestions.length - 1)
+    } else {
+      setQuizStep(step => Math.max(0, step - 1))
+    }
+    focusQuizHeading()
+  }
+
+  const restartQuiz = () => {
+    setQuizAnswers([])
+    setQuizStep(0)
+    setQuizComplete(false)
+    trackGoal('quiz_restart')
+    focusQuizHeading()
+  }
+
+  const openQuizGuide = () => {
+    trackGoal('quiz_guide_open', { destination: quizResult.id })
+    selectDestination(quizResult.id)
   }
 
   const downloadMemo = () => {
@@ -290,6 +408,7 @@ export default function App() {
         </button>
         <nav className="desktop-nav" aria-label="Основная навигация">
           <button onClick={() => scrollTo('directions')}>Направления</button>
+          <button onClick={() => scrollTo('quiz')}>Тест</button>
           <button onClick={() => scrollTo('guide')}>Путеводитель</button>
           <button onClick={() => scrollTo('prepare')}>Подготовка</button>
         </nav>
@@ -339,6 +458,82 @@ export default function App() {
               </div>
             </article>
           ))}
+        </section>
+
+        <section className="quiz-section" id="quiz" aria-labelledby="quiz-title">
+          <div className="quiz-heading">
+            <div>
+              <p className="quiz-kicker">Тест · 5 вопросов</p>
+              <h2 id="quiz-title">Куда вам<br />на Север?</h2>
+            </div>
+            <p>Выберите близкие вам ответы. В конце — направление, которое подходит вашему темпу и ожиданиям, с объяснением и переходом к путеводителю.</p>
+          </div>
+
+          <div className="quiz-body">
+            <div className="quiz-progress-copy">
+              <span>{quizComplete ? 'Тест пройден' : `Вопрос ${quizStep + 1} из ${quizQuestions.length}`}</span>
+              <span>{quizComplete ? quizQuestions.length : quizStep + 1} / {quizQuestions.length}</span>
+            </div>
+            <div
+              className="quiz-progress"
+              role="progressbar"
+              aria-label="Прогресс теста"
+              aria-valuemin={1}
+              aria-valuemax={quizQuestions.length}
+              aria-valuenow={quizComplete ? quizQuestions.length : quizStep + 1}
+            >
+              <span style={{ width: `${((quizComplete ? quizQuestions.length : quizStep + 1) / quizQuestions.length) * 100}%` }} />
+            </div>
+
+            {!quizComplete ? (
+              <div className="quiz-question" key={quizStep}>
+                <h3 ref={quizFocusRef} tabIndex={-1}>{quizQuestions[quizStep].question}</h3>
+                <div className="quiz-options" role="group" aria-label="Варианты ответа">
+                  {quizQuestions[quizStep].options.map((option, index) => (
+                    <button
+                      type="button"
+                      key={option.label}
+                      className={`quiz-option${quizAnswers[quizStep] === option.destination ? ' selected' : ''}`}
+                      aria-pressed={quizAnswers[quizStep] === option.destination}
+                      onClick={() => answerQuiz(option.destination)}
+                    >
+                      <span className="quiz-option-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                      <span>{option.label}</span>
+                      <ArrowRight size={19} aria-hidden="true" />
+                    </button>
+                  ))}
+                </div>
+                <div className="quiz-controls">
+                  <button type="button" className="quiz-back" onClick={previousQuizQuestion} disabled={quizStep === 0}>
+                    <ArrowLeft size={17} />Назад
+                  </button>
+                  <span>Ответ можно изменить, вернувшись к вопросу.</span>
+                </div>
+              </div>
+            ) : (
+              <div className="quiz-result">
+                <div className="quiz-result-visual">
+                  <img src={quizResult.image} alt={quizResult.alt} />
+                  <p>{quizResult.region}</p>
+                </div>
+                <div className="quiz-result-copy">
+                  <p className="quiz-result-kicker">Ваш результат</p>
+                  <h3 ref={quizFocusRef} tabIndex={-1}>{quizResult.name}</h3>
+                  <p className="quiz-result-reason">{quizResultCopy[quizResult.id]}</p>
+                  <div className="quiz-result-facts">
+                    <span><CalendarDays size={17} />{quizResult.duration}</span>
+                    <span><CloudSun size={17} />{quizResult.season}</span>
+                  </div>
+                  <div className="quiz-result-actions">
+                    <button type="button" className="primary-button" onClick={openQuizGuide}>Открыть путеводитель <ArrowRight size={19} /></button>
+                    <button type="button" className="secondary-button" onClick={restartQuiz}>Пройти ещё раз</button>
+                  </div>
+                  <button type="button" className="quiz-change-answer" onClick={previousQuizQuestion}><ArrowLeft size={16} />Изменить последний ответ</button>
+                  <p className="quiz-result-note">Это ориентир по вашим ответам, а не оценка бюджета или физической подготовки. Перед поездкой проверьте условия посещения.</p>
+                </div>
+              </div>
+            )}
+          </div>
         </section>
 
         <section className="guide-section" id="guide" aria-labelledby="guide-title">
@@ -474,7 +669,7 @@ export default function App() {
           <button onClick={() => scrollTo('directions')}>К направлениям <ArrowRight size={16} /></button>
         </div>
         <div className="footer-bottom">
-          <span>Редакция: {REVIEW_DATE}</span>
+          <span>2026 год</span>
           <details>
             <summary>Фотографии и лицензии <ChevronRight size={15} /></summary>
             <div className="credits-list">
@@ -494,6 +689,7 @@ export default function App() {
         <div className="brand"><Compass size={25} /><span>TRAVEL ARCTIC</span></div>
         <nav>
           <button onClick={() => scrollTo('directions')}>Направления <ArrowRight /></button>
+          <button onClick={() => scrollTo('quiz')}>Тест <ArrowRight /></button>
           <button onClick={() => scrollTo('guide')}>Путеводитель <ArrowRight /></button>
           <button onClick={() => scrollTo('prepare')}>Подготовка <ArrowRight /></button>
           <button onClick={() => scrollTo('memo')}>Памятка <ArrowRight /></button>
