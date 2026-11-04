@@ -35,7 +35,7 @@ const destinations: Destination[] = [
     name: 'Кольский полуостров',
     shortName: 'Кольский',
     region: 'Мурманская область · Баренцево море',
-    image: '/images/teriberka-vertical.webp',
+    image: './images/teriberka-vertical.webp',
     alt: 'Скалистое побережье Баренцева моря в Териберке',
     season: 'Лето и ранняя осень — для первой поездки',
     duration: '3–5 дней',
@@ -65,7 +65,7 @@ const destinations: Destination[] = [
     name: 'Кижи и Онежское озеро',
     shortName: 'Кижи',
     region: 'Карелия · Онежское озеро',
-    image: '/images/kizhi.webp',
+    image: './images/kizhi.webp',
     alt: 'Деревянные церкви и колокольня Кижского погоста у воды',
     season: 'Летняя навигация; зимой — отдельные программы',
     duration: '2–3 дня',
@@ -83,7 +83,7 @@ const destinations: Destination[] = [
       { title: 'День 2 · Остров Кижи', text: 'Заложите почти полный день на переправу и музей. Уточните время стоянки: короткого рейса может хватить только на основную экспозицию.' },
       { title: 'День 3 · Резерв или Карелия', text: 'При плотной транспортной связке оставьте запас на погоду. Если всё идёт по плану, продолжите знакомство с Петрозаводском или Заонежьем.' },
     ],
-    caution: 'Онежское озеро бывает неспокойным даже в тёплый сезон. Навигация и зимние перевозки зависят от погоды и ледовой обстановки. Не выходите на лёд самостоятельно и не считайте прошлогоднее расписание гарантией текущего.',
+    caution: 'Онежское озеро бывает неспокойным даже в тёплом сезоне. Навигация и зимние перевозки зависят от погоды и ледовой обстановки. Не выходите на лёд самостоятельно и не считайте прошлогоднее расписание гарантией текущего.',
     sources: [
       { label: 'Музей «Кижи»: как добраться и правила посещения', url: 'https://site.kizhi.karelia.ru/info/about/kizhi-island/' },
       { label: 'Официальный сайт музея-заповедника «Кижи»', url: 'https://kizhi.karelia.ru/' },
@@ -94,7 +94,7 @@ const destinations: Destination[] = [
     name: 'Соловецкие острова',
     shortName: 'Соловки',
     region: 'Архангельская область · Белое море',
-    image: '/images/solovki.webp',
+    image: './images/solovki.webp',
     alt: 'Соловецкий монастырь, каменные стены и островная гавань с высоты',
     season: 'Тёплая навигация; межсезонье требует проверки',
     duration: '3–4 дня',
@@ -124,7 +124,7 @@ const destinations: Destination[] = [
     name: 'Земля Франца-Иосифа',
     shortName: 'Земля Франца-Иосифа',
     region: 'Архангельская область · высокоширотная Арктика',
-    image: '/images/franz-josef.webp',
+    image: './images/franz-josef.webp',
     alt: 'Ледники и низкие облака над островами Земли Франца-Иосифа',
     season: 'Короткий экспедиционный сезон',
     duration: 'По программе экспедиции',
@@ -299,7 +299,7 @@ export default function App() {
 
       <main id="main">
         <section className="hero" aria-labelledby="hero-title">
-          <img className="hero-image" src="/images/hero-teriberka.webp" alt="Скалистый берег Баренцева моря в Териберке" fetchPriority="high" />
+          <img className="hero-image" src="./images/hero-teriberka.webp" alt="Скалистый берег Баренцева моря в Териберке" fetchPriority="high" />
           <div className="hero-shade" />
           <div className="hero-content">
             <h1 id="hero-title">Арктика и<br />Русский Север</h1>
