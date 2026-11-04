@@ -418,7 +418,7 @@ export default function App() {
 
       <main id="main">
         <section className="hero" aria-labelledby="hero-title">
-          <img className="hero-image" src="./images/hero-teriberka.jpg" alt="Скалистый берег Баренцева моря в Териберке" fetchPriority="high" />
+          <img className="hero-image" src="./images/hero-teriberka.jpg" alt="Скалистый берег Баренцева моря в Териберке" />
           <div className="hero-shade" />
           <div className="hero-content">
             <h1 id="hero-title">Арктика и<br />Русский Север</h1>
