@@ -76,11 +76,11 @@ CREDITS.md           Авторы, источники и лицензии фот
 
 ## Публикация на GitHub Pages
 
-Готовый workflow находится в файле `pages-deploy.yml`. Для его включения откройте в репозитории **Actions → New workflow → set up a workflow yourself**, укажите имя `.github/workflows/deploy.yml` и скопируйте туда содержимое `pages-deploy.yml`. После коммита он будет устанавливать зависимости, восстанавливать фотографии командой `npm run images`, собирать production-версию в `dist/` и публиковать именно этот каталог через официальные GitHub Pages Actions.
+Workflow `.github/workflows/main.yml` после каждого push в `main` устанавливает зависимости, восстанавливает фотографии командой `npm run images`, собирает production-версию в `dist/` и публикует именно этот каталог через официальные GitHub Pages Actions.
 
-Затем в настройках репозитория откройте **Settings → Pages → Build and deployment** и выберите **Source: GitHub Actions**. Вариант **Deploy from a branch → main / root** для этого проекта не подходит: в корне находятся исходники Vite, а не готовые файлы production-сборки.
+В настройках репозитория **Settings → Pages → Build and deployment** должен быть выбран **Source: GitHub Actions**. Вариант **Deploy from a branch → main / root** для этого проекта не подходит: в корне находятся исходники Vite, а не готовые файлы production-сборки.
 
-Последующие запуски происходят после каждого push в `main`; повторить вручную можно на вкладке **Actions → Deploy to GitHub Pages → Run workflow**. Публичный адрес проекта: `https://belokosvalexander.github.io/travelarctic/`.
+Повторить запуск вручную можно на вкладке **Actions → Deploy to GitHub Pages → Run workflow**. Публичный адрес проекта: `https://belokosvalexander.github.io/travelarctic/`.
 
 После `npm run build` каталог `dist/` можно разместить и на другом статическом хостинге без серверной логики. В рабочем пространстве Kimi версия сохраняется отдельно для предварительного просмотра; сохранение версии не означает публикацию на GitHub Pages.
 
